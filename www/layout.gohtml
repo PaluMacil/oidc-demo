@@ -1,0 +1,24 @@
+{{define "layout"}}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  <title>{{template "title" .}} - OIDC Demo</title>
+  
+  <meta name="keywords" content="OAuth2 OIDC Go">
+  <meta name="description" content="demonstrating OIDC authorization flow"/>
+  <meta name="author" content="Dan Wolf">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  {{template "page" .}}
+
+  <script src="main.js"></script>
+</body>
+</html>
+{{end}}
