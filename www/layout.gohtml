@@ -1,24 +1,27 @@
 {{define "layout"}}
-<!doctype html>
+    <!doctype html>
 
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  
-  <title>{{template "title" .}} - OIDC Demo</title>
-  
-  <meta name="keywords" content="OAuth2 OIDC Go">
-  <meta name="description" content="demonstrating OIDC authorization flow"/>
-  <meta name="author" content="Dan Wolf">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
 
-  <link rel="stylesheet" href="styles.css">
-</head>
+        <title>{{template "title" .}} - OIDC Demo</title>
 
-<body>
-  {{template "page" .}}
+        <meta name="keywords" content="OAuth2 OIDC Go">
+        <meta name="description" content="demonstrating OIDC authorization flow"/>
+        <meta name="author" content="Dan Wolf">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="main.js"></script>
-</body>
-</html>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+    <div class="wrapper">
+        <div class="box header">OIDC Demo</div>
+        {{template "page" .}}
+        <div class="box footer">Copyright (c) 2021 Dan Wolf</div>
+    </div>
+    <script src="main.js"></script>
+    </body>
+    </html>
 {{end}}
