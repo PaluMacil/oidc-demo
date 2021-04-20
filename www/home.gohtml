@@ -5,14 +5,24 @@
 {{define "page"}}
 
 
-    <div class="box menu">Menu</div>
+    <div class="box menu">
+        {{if .Authenticated}}
+            <img src="{{.Picture}}" />
+        {{end}}
+        <p>Menu</p>
+        {{if .Authenticated}}
+            <p>
+                <a href="/oauth/google/logout">log out</a>
+            </p>
+        {{end}}
+    </div>
     <div class="box content">
         <h2>Hello {{.Name}}</h2>
         {{if .Authenticated}}
             <p>You are authenticated! Now you can do things!</p>
-            <p>
-                <a href="/oauth/google/logout">log out</a>
-            </p>
+            <h3>Info</h3>
+            <p>Email: {{.Email}}</p>
+            <p>Locale: {{.Locale}}</p>
         {{else}}
             <p>Please Log In!</p>
             <a href="/oauth/google/login">
