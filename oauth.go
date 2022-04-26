@@ -30,12 +30,14 @@ func oauthHandler(clientId, clientSecret, redirectURL string, sessions *SessionS
 		RedirectURL:  redirectURL,
 		ClientID:     clientId,
 		ClientSecret: clientSecret,
-		Scopes: []string{"https://www.googleapis.com/auth/userinfo.profile",
+		Scopes: []string{
+			"openid",
+			"https://www.googleapis.com/auth/userinfo.profile",
 			"https://www.googleapis.com/auth/userinfo.email"},
 		Endpoint: google.Endpoint,
 	}
 
-	return func (w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		pathParts := strings.Split(r.URL.Path, "/")
 		if r.Method != "GET" || len(pathParts) != 4 {
 			log.Printf("oauth: path invalid length or not a GET: %s %s\n", r.Method, r.URL.Path)
@@ -97,12 +99,12 @@ func oauthHandler(clientId, clientSecret, redirectURL string, sessions *SessionS
 			// is usually ideal
 			session := sessions.Set(*claims)
 			cookie := &http.Cookie{
-				Name:       cookieName,
-				Value:      session.ID,
-				Path:       "/",
-				Expires:    time.Now().AddDate(0,0,7),
-				HttpOnly:   true,
-				SameSite:   http.SameSiteLaxMode,
+				Name:     cookieName,
+				Value:    session.ID,
+				Path:     "/",
+				Expires:  time.Now().AddDate(0, 0, 7),
+				HttpOnly: true,
+				SameSite: http.SameSiteLaxMode,
 			}
 			log.Printf("callback: created session %s for %s (%s)\n", session.ID, session.Name, session.Email)
 			http.SetCookie(w, cookie)
@@ -122,13 +124,13 @@ func oauthHandler(clientId, clientSecret, redirectURL string, sessions *SessionS
 			expireInPast := time.Now().Add(-7 * 24 * time.Hour)
 			cookie.Expires = expireInPast
 			deletionCookie := &http.Cookie{
-				Name:       cookieName,
-				Value:      "",
-				Path:       "/",
-				Expires:    expireInPast,
-				MaxAge:     -1,
-				HttpOnly:   true,
-				SameSite:   http.SameSiteLaxMode,
+				Name:     cookieName,
+				Value:    "",
+				Path:     "/",
+				Expires:  expireInPast,
+				MaxAge:   -1,
+				HttpOnly: true,
+				SameSite: http.SameSiteLaxMode,
 			}
 			http.SetCookie(w, deletionCookie)
 			// delete session from session store
